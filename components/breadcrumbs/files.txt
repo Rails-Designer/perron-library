@@ -1,0 +1,2 @@
+app/models/concerns/breadcrumbs.rb
+app/views/shared/_breadcrumbs.html.erb

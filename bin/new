@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+resource_path = ARGV[0]
+raise "Usage: bin/new <type/name>" unless resource_path
+
+type, name = resource_path.split("/", 2)
+raise "Invalid format. Use: components/name, snippets/name or templates/name" unless %w[components snippets templates].include?(type) && name
+
+resource_directory = File.join(type, name)
+raise "Resource #{resource_directory} already exists" if Dir.exist?(resource_directory)
+
+Dir.mkdir(resource_directory)
+Dir.mkdir(File.join(resource_directory, "development"))
+Dir.mkdir(File.join(resource_directory, "images"))
+
+File.write(File.join(resource_directory, "development", "template.rb"), <<~RUBY)
+  gem "perron" unless File.read("Gemfile").include?("perron")
+
+  # Add gems, configuration, etc.
+
+  after_bundle do
+    unless File.exist?("config/initializers/perron.rb")
+      rails_command "perron:install"
+    end
+
+    {{files}}
+
+    # Add generators, setup tasks, etc.
+  end
+RUBY
+
+File.write(File.join(resource_directory, "files.txt"), "")
+File.write(File.join(resource_directory, "template.md"), <<~MD)
+---
+type: #{type.gsub(/s$/, '')}
+author:
+title:
+description:
+about:
+category:
+---
+MD
+
+puts "Created #{resource_directory}"

@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+puts "Resetting dummy app to clean state…"
+
+system("git checkout test/dummy/")
+system("git clean -fd test/dummy/")
+
+puts "Dummy app reset"

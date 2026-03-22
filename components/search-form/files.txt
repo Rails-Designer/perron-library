@@ -1,0 +1,2 @@
+app/javascript/components/
+app/javascript/helpers/

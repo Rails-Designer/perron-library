@@ -1,0 +1,8 @@
+app/assets/tailwind/
+app/content/articles/
+app/content/data/quick_links.yml
+app/controllers/content/
+app/models/content/
+app/views/content/
+app/views/layouts/application.html.erb
+config/routes.rb

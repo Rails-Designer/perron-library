@@ -1,0 +1,2 @@
+app/assets/tailwind/
+app/assets/tailwind/components/content.css
