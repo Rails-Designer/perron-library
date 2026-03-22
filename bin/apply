@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+resource_path = ARGV[0]
+raise "Usage: bin/apply <type/name>" unless resource_path
+
+require "fileutils"
+
+template_path = File.join(resource_path, "template.rb")
+raise "Template not found: #{template_path}" unless File.exist?(template_path)
+
+Dir.chdir("test/dummy") do
+  system("bin/rails app:template LOCATION=../../#{template_path}")
+end

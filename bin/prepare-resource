@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+resource_path = ARGV[0]
+raise "Usage: bin/prepare-resource <type/name>" unless resource_path
+raise "Resource directory not found: #{resource_path}" unless Dir.exist?(resource_path)
+
+files_path = File.join(resource_path, "files.txt")
+dev_template = File.join(resource_path, "development", "template.rb")
+template = File.join(resource_path, "template.rb")
+existing_files = File.exist?(files_path) ? File.readlines(files_path).map(&:strip) : []
+
+# this gets a list of changed/new files in test/dummy/ folder only
+git_status = `git status --porcelain test/dummy/`.strip
+current_changes = git_status.lines.map do |line|
+  path = line.strip.split.last.delete_prefix("test/dummy/")
+
+  next if ["Procfile.dev", "bin/dev"].include?(path) || path.start_with?("app/assets/builds/") || path.match?(/^Gemfile(\.lock)?$/)
+  next if path.start_with?("tmp/", "log/")
+
+  path
+end.compact
+
+files = existing_files.to_set.union(current_changes).to_a.sort
+File.write(files_path, files.join("\n") + "\n") if files.any?
+
+file_contents = files.map do |file_path|
+  full_path = File.join("test/dummy", file_path)
+
+  if File.directory?(full_path)
+    Dir.glob("#{full_path}/**/*").select { File.file?(it) }.map do |file|
+      content = File.read(file)
+      path = file.delete_prefix("test/dummy/")
+
+      "create_file \"#{path}\", <<~'TEXT', force: true\n#{content}\nTEXT"
+    end
+  else
+    content = File.read(full_path)
+
+    "create_file \"#{file_path}\", <<~'TEXT', force: true\n#{content}\nTEXT"
+  end
+end.flatten.join("\n\n")
+
+template_content = File.read(dev_template).gsub("{{files}}", file_contents)
+File.write(template, template_content)
+
+puts "Generated files.txt with #{files.size} files"
+puts "Generated template.rb"

@@ -1,0 +1,8 @@
+app/assets/tailwind/
+app/content/data/links.yml
+app/content/data/platforms.yml
+app/content/pages/
+app/controllers/content/
+app/javascript/
+app/views/layouts/application.html.erb
+config/routes.rb

@@ -1,0 +1,1 @@
+app/javascript/components/visitor_greeting.js

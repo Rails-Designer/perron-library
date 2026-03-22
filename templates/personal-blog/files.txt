@@ -1,0 +1,10 @@
+app/assets/tailwind/
+app/content/data/social_links.yml
+app/content/pages/
+app/content/posts/
+app/controllers/content/
+app/models/content/
+app/views/content/
+app/views/layouts/application.html.erb
+app/views/shared/
+config/routes.rb
