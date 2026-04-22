@@ -9,6 +9,13 @@ after_bundle do
 ---
 name: perron
 description: Build static sites with Perron, a Rails-based static site generator. Use this skill when the user mentions Perron or SSG in Rails, when the perron gem is available or when `config/initializers/perron.rb` is available.
+triggers:
+  - perron
+  - ssg
+  - static site
+  - static site generator
+  - website
+invocable: true
 ---
 
 Perron is a Rails-based Static Site Generator (SSG). Build with Rails. Deploy static sites.
