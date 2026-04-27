@@ -6,7 +6,7 @@ after_bundle do
   end
 
   if File.exist?("app/assets/tailwind/application.css")
-    insert_into_file "app/assets/tailwind/application.css", "\n@import ./components/content"
+    insert_into_file "app/assets/tailwind/application.css", "\n@import './components/content'"
   end
 
   create_file "app/assets/tailwind//components/content.css", <<~'TEXT', force: true
