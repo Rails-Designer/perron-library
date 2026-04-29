@@ -74,14 +74,14 @@ say "Inserting the favicons partial within the application's layout <head>"
 if APPLICATION_LAYOUT_PATH.exist?
   if File.read(APPLICATION_LAYOUT_PATH) =~ /<\/head>/
     insert_into_file APPLICATION_LAYOUT_PATH.to_s, <<~ERB.indent(4), before: /^\s*<\/head>/
-<%%= render partial: "shared/favicons" %>
+<%= render partial: "shared/favicons" %>
     ERB
   else
     say "The <head> tag is missing in your application layout", :red
-    say %(        Add `<%%= render partial: "shared/favicons" %>` within the `<head>` of your layout.)
+    say %(        Add `<%= render partial: "shared/favicons" %>` within the `<head>` of your layout.)
   end
 else
   say "Default application.html.erb is missing!", :red
-  say %(        Add `<%%= render partial: "shared/favicons" %>` within the `<head>` of your layout.)
+  say %(        Add `<%= render partial: "shared/favicons" %>` within the `<head>` of your layout.)
 end
 end
