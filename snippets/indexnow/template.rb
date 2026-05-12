@@ -10,6 +10,4 @@ key = SecureRandom.hex
 file "public/#{key}.txt", <<-KEY
 #{key}
 KEY
-
-say "------\n    👉 Use this staticsiteautomationtools.com to automatically ping IndexNow when new content is published: https://staticsiteautomationtools.com\n ------"
 end
