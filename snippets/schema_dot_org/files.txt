@@ -1,0 +1,2 @@
+app/controllers/concerns/structured_data.rb
+app/models/schema_dot_org/
